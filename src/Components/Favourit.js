@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import DataTable from "react-data-table-component";
 
 const Favourit = () => {
   const data = JSON.parse(localStorage.getItem("favourits"));
-
+  const [favourits, setFavourits] = useState(data);
+  const handleDelete = (id) => {
+    const result = data.filter((val) => val.id != id);
+    setFavourits(result);
+    localStorage.setItem("favourits", JSON.stringify(result));
+  };
   const columns = [
     {
       name: "S.No",
@@ -28,10 +33,21 @@ const Favourit = () => {
       ),
       center: true,
     },
+    {
+      name: "Action",
+      selector: (row) => (
+        <i
+          class="fa fa-trash trasn_icon"
+          aria-hidden="true"
+          onClick={() => handleDelete(row.id)}
+        ></i>
+      ),
+      center: true,
+    },
   ];
   return (
     <div>
-      <DataTable columns={columns} data={data} />
+      <DataTable columns={columns} data={favourits} />
     </div>
   );
 };

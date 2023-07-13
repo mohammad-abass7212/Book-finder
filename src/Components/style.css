@@ -236,3 +236,7 @@ html {
   width: 50px;
   height: 40px;
 }
+.trasn_icon {
+  color: rgb(168, 85, 85);
+  cursor: pointer;
+}

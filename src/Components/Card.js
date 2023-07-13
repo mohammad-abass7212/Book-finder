@@ -7,12 +7,25 @@ const Card = ({ book }) => {
   const [favourits, setFavourits] = useState([]);
 
   const addToFavourits = (item) => {
-    setFavourits((oldArray) => [...oldArray, item]);
-    localStorage.setItem("favourits", JSON.stringify(favourits));
+    // setFavourits((oldArray) => [...oldArray, item]);
+    // const updated = "";
+    const exist = favourits.some((val) => val.id === item.id);
+    if (exist) {
+      alert("already esists");
+    } else {
+      setFavourits((oldArray) => {
+        const updated = [...oldArray, item];
+        localStorage.setItem("favourits", JSON.stringify(updated));
+        return updated;
+      });
+    }
   };
-  //   useEffect(() => {
-
-  //   }, [favourits]);
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("favourits"));
+    if (data !== null) {
+      setFavourits(data);
+    }
+  }, []);
   const handleDetailPage = (item) => {
     navigate("/detail", { state: item });
   };
